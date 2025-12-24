@@ -1,5 +1,5 @@
-const nodemailer = require("nodemailer");
-const { smtpUsername, smtpPassword } = require("../secret");
+import nodemailer from "nodemailer";
+import { smtpPassword, smtpUsername } from "../secret.js";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -28,4 +28,4 @@ const emailWithNodemailer = async (emailData) => {
   }
 };
 
-module.exports = emailWithNodemailer;
+export default emailWithNodemailer;

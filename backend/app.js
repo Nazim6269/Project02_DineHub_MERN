@@ -1,16 +1,15 @@
 //external import
-const express = require("express");
+import cors from "cors";
+import express from "express";
+import rateLimit from "express-rate-limit";
+import createError from "http-errors";
+import morgan from "morgan";
+
 const app = express();
-const cors = require("cors");
-const morgan = require("morgan");
-const createError = require("http-errors");
-const rateLimit = require("express-rate-limit");
-const xssClean = require("xss-clean");
 
 //internal import
-const { userRouter } = require("./routes/userRouter");
-const { errorResponse } = require("./helpers/responseHandler");
-const { fbId, fbSecret } = require("./secret");
+import { errorResponse } from "./helpers/responseHandler.js";
+import { userRouter } from "./routes/userRouter.js";
 
 //middleware array
 const middleware = [
@@ -21,7 +20,7 @@ const middleware = [
     max: 10,
     message: "Sorry you have tried more than 5,try again later",
   }),
-  xssClean(),
+
   express.urlencoded({ extended: true }),
   express.json(),
 ];
@@ -40,4 +39,4 @@ app.use((err, req, res, next) => {
   return errorResponse(res, { statusCode: err.status, message: err.message });
 });
 
-module.exports = app;
+export default app;

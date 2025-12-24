@@ -1,30 +1,38 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../helpers/logout";
-import style from "./modal.module.css";
 
 const Modal = ({ closeModal, profile }) => {
   return (
     <>
-      <div className={style.modalWrapper}></div>
-      <div className={style.modalContainer}>
-        <div className="flex flex-col capitalize text-gray-600 cursor-pointer">
-          <span>change password</span>
-          <span>manage accounts</span>
-          <span>security and privacy</span>
+      {/* Overlay */}
+      <div
+        className="fixed inset-0 bg-black bg-opacity-40 z-40"
+        onClick={closeModal}
+      ></div>
+
+      {/* Modal container */}
+      <div className="fixed top-1/2 left-1/2 z-50 w-11/12 max-w-sm transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg p-6">
+        <div className="flex flex-col gap-3 text-gray-700 capitalize">
+          <span className="hover:text-pink-600 cursor-pointer transition">
+            Change password
+          </span>
+          <span className="hover:text-pink-600 cursor-pointer transition">
+            Manage accounts
+          </span>
+          <span className="hover:text-pink-600 cursor-pointer transition">
+            Security and privacy
+          </span>
           <Link
-            onClick={() => {
-              logout(profile);
-            }}
-            className=""
+            onClick={() => logout(profile)}
+            className="hover:text-pink-600 cursor-pointer transition"
           >
             Log out
           </Link>
           <button
-            className="bg-pink-600 text-white capitalize mt-2 py-1 cursor-pointer"
             onClick={closeModal}
+            className="mt-4 w-full bg-pink-600 text-white py-2 rounded-lg font-medium hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-200"
           >
-            close
+            Close
           </button>
         </div>
       </div>

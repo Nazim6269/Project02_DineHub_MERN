@@ -19,4 +19,4 @@ const successResponse = (
   });
 };
 
-module.exports = { errorResponse, successResponse };
+export { errorResponse, successResponse };

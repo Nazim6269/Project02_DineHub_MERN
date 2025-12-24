@@ -7,7 +7,6 @@ import { setAccessTokenCookie } from "../../helpers/setAccessToken";
 import { profileInLocalStorage } from "../../helpers/setLocalStorage";
 import { setProfileInfo } from "../../redux/actions/actionsCreator";
 
-//==========sign up component starts from here==========//
 const SignupForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,14 +16,8 @@ const SignupForm = () => {
     password: "",
   });
 
-  // These methods will update the state properties.
-  const updateForm = (value) => {
-    return setValue((prev) => {
-      return { ...prev, ...value };
-    });
-  };
+  const updateForm = (value) => setValue((prev) => ({ ...prev, ...value }));
 
-  //handle submit functioin
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPerson = { ...value };
@@ -32,9 +25,7 @@ const SignupForm = () => {
     try {
       const res = await fetch("http://localhost:3333/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newPerson),
       });
       const data = await res.json();
@@ -49,78 +40,83 @@ const SignupForm = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-16">
-      <div className="w-full max-w-xl rounded-xl bg-white p-8 shadow-md">
-        <h2 className="text-center text-3xl font-bold text-pink-600 mb-6">
-          Signup
+    <div className="min-h-screen bgDarkGray flex items-center justify-center px-4 py-16">
+      <div className="w-full max-w-md rounded-xl bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 p-8 shadow-lg text-white">
+        <h2 className="text-center text-3xl font-bold text-primaryTextColor mb-6">
+          Create Your Account
         </h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="name"
+              className="block text-sm font-semibold text-gray-300"
+            >
               Name
             </label>
             <input
+              id="name"
               type="text"
-              name="name"
               value={value.name}
               onChange={(e) => updateForm({ name: e.target.value })}
               placeholder="Enter your name"
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-gray-900 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">
-              Email address
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-gray-300"
+            >
+              Email Address
             </label>
             <input
+              id="email"
               type="email"
-              name="email"
               value={value.email}
               onChange={(e) => updateForm({ email: e.target.value })}
               placeholder="name@example.com"
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-gray-900 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-gray-300"
+            >
               Password
             </label>
             <input
+              id="password"
               type="password"
-              name="password"
               value={value.password}
               onChange={(e) => updateForm({ password: e.target.value })}
               placeholder="Enter your password"
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-gray-900 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
             />
           </div>
 
-          <button
-            className="w-full rounded-lg bg-pink-600 px-4 py-2 text-white font-semibold shadow-sm transition hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
-            type="submit"
-          >
-            Sign up
+          <button type="submit" className="w-full rounded-lg primaryBtnUi">
+            Sign Up Now
           </button>
 
-          <Link
-            to="/login"
-            className="inline-block w-full rounded-lg bg-pink-600 px-4 py-2 text-center text-white font-semibold shadow-sm transition hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
-          >
-            Login
+          <Link to="/login" className="inline-block w-full secondaryBtnUi">
+            Already Have an Account? Login
           </Link>
         </form>
       </div>
+
       <ToastContainer position="top-center" autoClose={4000} />
     </div>
   );

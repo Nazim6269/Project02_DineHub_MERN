@@ -1,7 +1,7 @@
 //internal import
-const app = require("./app");
-const connectDB = require("./configs/db");
-const { port } = require("./secret");
+import app from "./app.js";
+import connectDB from "./configs/db.js";
+import { port } from "./secret.js";
 
 //server is listening here
 app.listen(port, async () => {

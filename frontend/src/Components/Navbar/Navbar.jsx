@@ -8,89 +8,98 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { profile } = useSelector((state) => state.profileReducer);
 
-  //handleModal function
-  const handleModal = () => {
-    setShowModal((prev) => !prev);
-  };
-
+  const handleModal = () => setShowModal((prev) => !prev);
   const closeModal = () => setShowModal(false);
 
   return (
-    <div>
-      <header className="text-white bg-pink-600 font-semibold body-font shadow-lg">
-        <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Link to="/" className="flex items-center">
-              <span className="text-2xl sm:text-3xl italic">DineHub</span>
-            </Link>
-            <span className="hidden sm:block text-sm sm:text-base">Category</span>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setIsOpen((prev) => !prev)}
-            className="md:hidden inline-flex items-center justify-center rounded-md p-2 hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-white/50"
-            aria-label="Toggle navigation"
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {isOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-
-          <nav
-            className={`w-full md:w-auto flex-col md:flex-row md:flex items-start md:items-center text-base gap-3 md:gap-6 ${
-              isOpen ? "flex" : "hidden"
-            }`}
-          >
-            <Link className="w-full md:w-auto" to="/">
-              Home
-            </Link>
-            <Link className="w-full md:w-auto">About</Link>
-            <Link className="w-full md:w-auto" to="/contact">
-              Contact
-            </Link>
-            <Link className="w-full md:w-auto">Profile</Link>
-          </nav>
-
-          {/* Navbar Button  */}
-          <div className="w-full md:w-auto flex flex-wrap items-center gap-2 justify-start md:justify-end">
-            <Link
-              to="/cart"
-              className="inline-flex items-center text-white bg-pink-600 border border-white/20 py-2 px-3 rounded hover:bg-pink-500 transition"
-            >
-              Go to cart
-            </Link>
-            <Link
-              to="/login"
-              className="inline-flex items-center text-white bg-pink-600 border border-white/20 py-2 px-3 rounded hover:bg-pink-500 transition"
-            >
-              Login
-            </Link>
-            <button className="inline-flex items-center text-white bg-pink-600 border border-white/20 py-2 px-3 rounded hover:bg-pink-500 transition">
-              Language
-            </button>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <img className="w-8 h-8 rounded-full object-cover" src={profile.picture} alt="profile" />
-            <button className="cursor-pointer" onClick={handleModal}>
-              {profile.name}
-            </button>
-            {showModal && <Modal closeModal={closeModal} profile={profile} />}
-          </div>
+    <header className="bgDarkGray text-white font-semibold shadow-md body-font">
+      <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 px-4 py-3">
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center">
+            <span className="text-2xl sm:text-3xl italic font-bold text-primaryTextColor">
+              DineHub
+            </span>
+          </Link>
         </div>
-      </header>
-    </div>
+
+        {/* Hamburger button for mobile */}
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="md:hidden inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white/50 transition"
+          aria-label="Toggle navigation"
+        >
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            {isOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
+
+        {/* Navigation Links */}
+        <nav
+          className={`flex-col md:flex-row md:flex items-start md:items-center gap-2 md:gap-6 w-full md:w-auto ${
+            isOpen ? "flex" : "hidden"
+          }`}
+        >
+          {["Home", "About", "Contact", "Profile"].map((link) => (
+            <Link
+              key={link}
+              to={link === "Home" ? "/" : `/${link.toLowerCase()}`}
+              className="w-full md:w-auto hover:text-primaryTextHoverColor transition"
+            >
+              {link}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Navbar Buttons */}
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto justify-start md:justify-end mt-2 md:mt-0">
+          {["Go to cart", "Login", "Language"].map((btn) => (
+            <button
+              key={btn}
+              className="inline-flex items-center bg-gray-800 border border-white/20 py-2 px-3 rounded hover:bg-gray-700 transition text-sm sm:text-base"
+            >
+              {btn}
+            </button>
+          ))}
+        </div>
+
+        {/* Profile & Modal */}
+        <div className="flex items-center gap-3 mt-2 md:mt-0">
+          <img
+            className="w-8 h-8 rounded-full object-cover"
+            src={profile.picture}
+            alt="profile"
+          />
+          <button
+            className="hover:text-pink-400 transition"
+            onClick={handleModal}
+          >
+            {profile.name}
+          </button>
+          {showModal && <Modal closeModal={closeModal} profile={profile} />}
+        </div>
+      </div>
+    </header>
   );
 };
 

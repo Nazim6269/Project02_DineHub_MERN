@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { setLocalSeclectedProduct } from "../../helpers/setLocalStorage";
@@ -6,7 +6,6 @@ import {
   addToCart,
   setSelectProduct,
 } from "../../redux/actions/actionsCreator";
-import Footer from "../Footer/Footer";
 import Question from "../Question/Question";
 import RecentView from "../RecentView/RecentView";
 import RelatedItem from "../RelatedItem/RelatedItem";
@@ -20,14 +19,12 @@ const CardDetails = () => {
     (state) => state.selectedProductReducer
   );
 
-  if (!selectedProduct) {
-    return <div>Loading</div>;
-  }
+  if (!selectedProduct) return <div>Loading</div>;
 
   const arrData = selectedProduct.filter((item) => item._id === id);
   if (!arrData || arrData.length === 0) {
     return (
-      <div className=" h-[55vh] flex justify-center items-center text-4xl">
+      <div className="h-[55vh] flex justify-center items-center text-2xl sm:text-4xl text-white">
         Loading...
       </div>
     );
@@ -38,57 +35,70 @@ const CardDetails = () => {
     setLocalSeclectedProduct(arrData);
   }, []);
 
-  //handleCart function
   const handleCart = (item) => {
     dispatch(addToCart(item));
   };
 
   return (
-    <>
-      <section className="text-black body-font overflow-hidden">
-        {arrData?.map((item) => {
-          let { _id, img, description, name, CategoryName } = item;
+    <div className="bgDarkGray">
+      <section className=" text-white body-font overflow-hidden">
+        {arrData.map((item) => {
+          const { _id, img, description, name, CategoryName } = item;
           const { full } = item.options[0];
+
           return (
-            <div key={_id} className="container px-4 sm:px-6 lg:px-8 py-12 mx-auto">
-              <div className="lg:w-4/5 mx-auto flex flex-col lg:flex-row gap-8">
-                <img
-                  alt="ecommerce"
-                  className="lg:w-1/2 w-full h-64 sm:h-80 object-cover object-center rounded"
-                  src={img}
-                />
-                <div className="lg:w-1/2 w-full lg:pl-6 lg:py-2">
-                  <h2 className="text-md font-semibold title-font text-black tracking-widest">
-                    {name}
-                  </h2>
-                  <h1 className="text-black text-2xl sm:text-3xl title-font font-medium mb-4">
-                    {CategoryName}
-                  </h1>
+            <div
+              key={_id}
+              className="container mx-auto px-4 sm:px-6 lg:px-8 py-12"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Product Image */}
+                <div className="lg:col-span-2">
+                  <div className="rounded-xl overflow-hidden shadow-xl">
+                    <img
+                      src={img}
+                      alt={name}
+                      className="w-full h-96 sm:h-125 object-cover object-center"
+                    />
+                  </div>
+                </div>
 
-                  <p className="leading-relaxed mb-6">{description}</p>
+                {/* Product Info */}
+                <div className="flex flex-col gap-6">
+                  <div>
+                    <h2 className="text-sm sm:text-md font-semibold tracking-widest text-gray-400">
+                      {name}
+                    </h2>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mt-1">
+                      {CategoryName}
+                    </h1>
+                  </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                    <span className="title-font font-medium text-2xl">
-                      Price: ${full}
+                  <p className="text-gray-300 leading-relaxed">{description}</p>
+
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mt-6">
+                    <span className="text-2xl sm:text-3xl font-semibold text-white">
+                      ${full}
                     </span>
-                    <div className="flex flex-wrap gap-3 sm:ml-auto">
+
+                    <div className="flex flex-wrap gap-3">
                       <Link
-                        to={"/"}
-                        className="inline-flex text-white bg-pink-600 border-0 py-2 px-5 rounded hover:bg-pink-500 transition"
+                        to="/"
+                        className="px-5 py-3 bg-linear-to-r from-blue-600 to-sky-500 rounded-lg text-white font-semibold shadow-lg hover:from-blue-700 hover:to-sky-600 transition"
                       >
-                        Go to home
+                        Home
                       </Link>
                       <button
                         onClick={() => handleCart(item)}
-                        className="inline-flex text-white bg-pink-600 border-0 py-2 px-5 rounded hover:bg-pink-500 transition"
+                        className="px-5 py-3 bg-linear-to-r from-green-600 to-teal-500 rounded-lg text-white font-semibold shadow-lg hover:from-green-700 hover:to-teal-600 transition"
                       >
-                        Add to cart
+                        Add to Cart
                       </button>
                       <Link
-                        to={"/cart"}
-                        className="inline-flex text-white bg-pink-600 border-0 py-2 px-5 rounded hover:bg-pink-500 transition"
+                        to="/cart"
+                        className="px-5 py-3 bg-linear-to-r from-purple-600 to-indigo-500 rounded-lg text-white font-semibold shadow-lg hover:from-purple-700 hover:to-indigo-600 transition"
                       >
-                        Go to cart
+                        View Cart
                       </Link>
                     </div>
                   </div>
@@ -98,23 +108,26 @@ const CardDetails = () => {
           );
         })}
       </section>
-      {/* question review */}
-      <div className="flex flex-col lg:flex-row gap-4 px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="flex-1 flex flex-col gap-4">
+
+      {/* Sidebar Layout for Question, Review, Related & Recent */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main content: Question & Review */}
+        <div className="lg:col-span-2 flex flex-col gap-6">
           <Question />
           <Review />
         </div>
-        <div className="w-full lg:w-1/3 flex flex-col gap-4">
-          <div className="bg-gray-100 rounded px-4 py-3 shadow-sm">
+
+        {/* Sidebar: Related & Recent */}
+        <div className="flex flex-col gap-6 sticky top-24">
+          <div className="bg-gray-800 rounded-xl p-4 shadow-lg">
             <RelatedItem />
           </div>
-          <div className="bg-gray-100 rounded px-4 py-3 shadow-sm">
+          <div className="bg-gray-800 rounded-xl p-4 shadow-lg">
             <RecentView />
           </div>
         </div>
       </div>
-      <Footer />
-    </>
+    </div>
   );
 };
 

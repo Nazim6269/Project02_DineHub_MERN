@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -11,7 +9,6 @@ const ResetPassword = () => {
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
 
-  //handle send function
   const handleSend = async (e) => {
     e.preventDefault();
 
@@ -23,48 +20,55 @@ const ResetPassword = () => {
         },
         body: JSON.stringify({ newPass, confirmPass, id }),
       });
-      setConfirmPass("");
       setNewPass("");
+      setConfirmPass("");
       const data = await res.json();
       toast(data.message);
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
-    <div className="p-20">
-      <Card className="w-5/12 p-3 border-none shadow-md  mx-auto">
-        <h2 className="mx-auto mb-4 text-pink-600 font-bold text-3xl">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-16">
+      <div className="w-full max-w-md sm:max-w-xl rounded-xl bg-white p-6 sm:p-8 shadow-md">
+        <h2 className="text-center text-2xl sm:text-3xl font-bold text-pink-600 mb-6">
           Enter Your Password
         </h2>
-        <Form onSubmit={handleSend}>
-          <Form.Group className="mb-3">
-            <Form.Label>New Password</Form.Label>
-            <Form.Control
+        <form className="space-y-4" onSubmit={handleSend}>
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-gray-700">
+              New Password
+            </label>
+            <input
               type="password"
               value={newPass}
               onChange={(e) => setNewPass(e.target.value)}
+              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-gray-900 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
+              required
             />
-          </Form.Group>
-          <ToastContainer position="top-center" autoClose={4000} />
-          <Form.Group className="mb-3">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-gray-700">
+              Confirm Password
+            </label>
+            <input
               type="password"
               value={confirmPass}
               onChange={(e) => setConfirmPass(e.target.value)}
+              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-gray-900 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
+              required
             />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <button
-              className="btn border-none text-white font-semibold bg-pink-600 hover:bg-pink-500 w-full text-center"
-              type="submit"
-            >
-              Send
-            </button>
-          </Form.Group>
-        </Form>
-      </Card>
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-pink-600 px-4 py-2 text-white font-semibold shadow-sm transition hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
+          >
+            Send
+          </button>
+        </form>
+      </div>
+      <ToastContainer position="top-center" autoClose={4000} />
     </div>
   );
 };

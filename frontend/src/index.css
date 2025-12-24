@@ -1,3 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primaryTextColor: oklch(71.4% 0.203 305.504);
+  --color-primaryTextHoverColor: oklch(62.7% 0.265 303.9);
+}
+
+@layer components {
+  .bgDarkGray {
+    @apply bg-linear-to-r from-gray-900 via-gray-800 to-gray-900;
+  }
+
+  .primaryBtnUi {
+    @apply bg-linear-to-r from-purple-500 to-indigo-500 px-4 py-2 text-white font-semibold shadow-lg hover:from-purple-600 hover:to-indigo-600 transition focus:outline-none focus:ring-2 focus:ring-purple-400;
+  }
+
+  .secondaryBtnUi {
+    @apply rounded-lg bg-linear-to-r from-gray-700 to-gray-900 px-4 py-2 text-center text-white font-semibold shadow-sm hover:from-gray-600 hover:to-gray-800 transition focus:outline-none focus:ring-2 focus:ring-gray-500;
+  }
+}

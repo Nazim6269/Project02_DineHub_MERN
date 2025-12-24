@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const createJWT = (payload, secretKey, expiresIn) => {
   if (typeof payload !== "object" || !payload) {
@@ -16,4 +16,4 @@ const createJWT = (payload, secretKey, expiresIn) => {
   }
 };
 
-module.exports = { createJWT };
+export { createJWT };

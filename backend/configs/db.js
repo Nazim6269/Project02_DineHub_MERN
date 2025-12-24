@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { mongoURL } = require("../secret");
+import mongoose from "mongoose";
+import { mongoURL } from "../secret.js";
 
 const connectDB = async (options = {}) => {
   try {
@@ -14,4 +14,4 @@ const connectDB = async (options = {}) => {
   }
 };
 
-module.exports = connectDB;
+export default connectDB;

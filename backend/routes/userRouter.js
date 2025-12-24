@@ -1,16 +1,19 @@
-const {
-  signupPostController,
-  signupGetController,
-  loginPostController,
+import express from "express";
+import {
   foodController,
-  googleLoginController,
-  logoutController,
   forgetPassController,
+  googleLoginController,
+  loginPostController,
+  logoutController,
   resetPassController,
-} = require("../controllers/userController");
-const { signupValidator, loginValidator } = require("../validators/condition");
-const { runValidation } = require("../validators/validation");
-const userRouter = require("express").Router();
+  signupGetController,
+  signupPostController,
+} from "../controllers/userController.js";
+
+import { loginValidator, signupValidator } from "../validators/condition.js";
+import { runValidation } from "../validators/validation.js";
+
+const userRouter = express.Router();
 
 //all routes are here
 userRouter.get("/signup", signupGetController);
@@ -27,4 +30,4 @@ userRouter.post("/google-login", googleLoginController);
 userRouter.post("/forget-password", forgetPassController);
 userRouter.post("/reset-password", resetPassController);
 
-module.exports = { userRouter };
+export { userRouter };

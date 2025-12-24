@@ -1,16 +1,10 @@
-import React from "react";
 import Category from "../Category/Category";
 
 const Categories = () => {
   return (
-    <div>
-      <h2 className="text-3xl font-semibold text-center">
-        Food Categories
-        <div className="mt-7">
-          <Category />
-        </div>
-      </h2>
-    </div>
+    <section className="bgDarkGray text-white px-4 sm:px-6 lg:px-8 py-12">
+      <Category />
+    </section>
   );
 };
 

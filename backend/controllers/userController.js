@@ -1,16 +1,14 @@
-//external import
-const createError = require("http-errors");
-const bcrypt = require("bcryptjs");
-//internal import
-const {
-  errorResponse,
-  successResponse,
-} = require("../helpers/responseHandler");
-const { User } = require("../models/signupModel");
-const { jwtAccessKey, jwtSecretKey } = require("../secret");
-const { mongoose } = require("mongoose");
-const { createJWT } = require("../helpers/createJWT");
-const emailWithNodemailer = require("../helpers/emailWithNodemailer");
+// External imports
+import bcrypt from "bcryptjs";
+import createError from "http-errors";
+import mongoose from "mongoose";
+
+// Internal imports
+import { createJWT } from "../helpers/createJWT.js";
+import emailWithNodemailer from "../helpers/emailWithNodemailer.js";
+import { errorResponse, successResponse } from "../helpers/responseHandler.js";
+import { User } from "../models/signupModel.js";
+import { jwtAccessKey, jwtSecretKey } from "../secret.js";
 
 const signupGetController = (req, res) => {
   res.send("hi");
@@ -156,6 +154,7 @@ const foodController = async (req, res, next) => {
       .collection("Food_items")
       .find({})
       .toArray();
+
     const foodCategory = await mongoose.connection.db
       .collection("Food_Category")
       .find({})
@@ -265,13 +264,13 @@ const resetPassController = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  signupPostController,
-  signupGetController,
-  loginPostController,
+export {
   foodController,
-  googleLoginController,
-  logoutController,
   forgetPassController,
+  googleLoginController,
+  loginPostController,
+  logoutController,
   resetPassController,
+  signupGetController,
+  signupPostController,
 };
