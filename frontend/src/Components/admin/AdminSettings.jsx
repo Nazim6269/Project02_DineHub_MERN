@@ -17,52 +17,54 @@ const AdminSettings = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold mb-6 text-white">Settings</h1>
+    <div className="flex flex-col gap-6">
+      <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary">
+        Settings
+      </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 p-6 rounded-xl shadow-lg max-w-lg"
+        className="bg-background-card p-6 rounded-xl shadow-lg max-w-lg w-full"
       >
         {/* Site Name */}
-        <div className="mb-4">
-          <label className="block text-gray-300 mb-2">Site Name</label>
+        <div className="mb-4 flex flex-col gap-2">
+          <label className="text-[var(--color-text-muted)]">Site Name</label>
           <input
             type="text"
             name="siteName"
             value={settings.siteName}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-lg bg-gray-800 text-gray-200 border border-gray-700 focus:outline-none focus:border-primaryTextColor"
+            className="w-full px-4 py-2 rounded-lg bg-background-dark text-text-primary border border-white/20 focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan)"
           />
         </div>
 
         {/* Admin Email */}
-        <div className="mb-4">
-          <label className="block text-gray-300 mb-2">Admin Email</label>
+        <div className="mb-4 flex flex-col gap-2">
+          <label className="text-[var(--color-text-muted)]">Admin Email</label>
           <input
             type="email"
             name="adminEmail"
             value={settings.adminEmail}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-lg bg-gray-800 text-gray-200 border border-gray-700 focus:outline-none focus:border-primaryTextColor"
+            className="w-full px-4 py-2 rounded-lg bg-background-dark text-text-primary border border-white/20 focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan)"
           />
         </div>
 
         {/* Password */}
-        <div className="mb-6">
-          <label className="block text-gray-300 mb-2">Password</label>
+        <div className="mb-6 flex flex-col gap-2">
+          <label className="text-[var(--color-text-muted)]">Password</label>
           <input
             type="password"
             name="password"
             value={settings.password}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-lg bg-gray-800 text-gray-200 border border-gray-700 focus:outline-none focus:border-primaryTextColor"
+            className="w-full px-4 py-2 rounded-lg bg-background-dark text-text-primary border border-white/20 focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan)"
           />
         </div>
 
         <button
           type="submit"
-          className="primaryBtnUi text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+          className="bg-(--color-accent-cyan) hover:bg-cyan-500 text-white font-semibold px-6 py-2 rounded-lg shadow transition"
         >
           Save Settings
         </button>

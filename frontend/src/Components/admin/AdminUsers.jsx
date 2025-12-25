@@ -5,15 +5,17 @@ const AdminUsers = () => {
   ];
 
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       {/* Page Title */}
-      <h1 className="text-2xl font-semibold mb-6 text-white">Users</h1>
+      <h1 className="text-2xl sm:text-3xl font-semibold text-text-primary">
+        Users
+      </h1>
 
       {/* Table */}
-      <div className="bg-gray-900 rounded-xl shadow-lg overflow-x-auto border border-gray-800">
-        <table className="w-full text-left text-gray-300">
+      <div className="bg-background-card rounded-xl shadow-lg overflow-x-auto border border-white/20">
+        <table className="w-full min-w-[600px] text-left text-text-secondary">
           {/* Table Head */}
-          <thead className="bg-gray-800 text-gray-400 text-sm uppercase">
+          <thead className="bg-background-dark text-[var(--color-text-muted)] text-sm uppercase">
             <tr>
               <th className="p-4">Name</th>
               <th className="p-4">Email</th>
@@ -27,9 +29,11 @@ const AdminUsers = () => {
             {users.map((user) => (
               <tr
                 key={user.id}
-                className="border-t border-gray-800 hover:bg-gray-800 transition"
+                className="border-t border-white/20 hover:bg-background-dark transition"
               >
-                <td className="p-4 font-medium text-white">{user.name}</td>
+                <td className="p-4 font-medium text-text-primary">
+                  {user.name}
+                </td>
                 <td className="p-4">{user.email}</td>
                 <td className="p-4">
                   <span
@@ -42,9 +46,9 @@ const AdminUsers = () => {
                     {user.role}
                   </span>
                 </td>
-                <td className="p-4 text-right space-x-3">
+                <td className="p-4 text-right flex flex-wrap gap-2 justify-end">
                   {user.role !== "admin" && (
-                    <button className="text-blue-400 hover:underline">
+                    <button className="text-(--color-accent-cyan) hover:underline">
                       Make Admin
                     </button>
                   )}

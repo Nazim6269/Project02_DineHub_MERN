@@ -19,7 +19,7 @@ const Cart = () => {
     setAmount(cart.length);
   }, [cart]);
 
-  // Calculate total using useMemo
+  // Calculate total
   const total = useMemo(() => {
     return (
       cart.reduce(
@@ -31,23 +31,23 @@ const Cart = () => {
 
   if (!cart.length) {
     return (
-      <div className="h-[55vh] flex justify-center items-center text-2xl font-semibold">
+      <div className="h-[55vh] flex justify-center items-center text-2xl font-semibold text-gray-300">
         Your cart is empty.
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="flex flex-col lg:flex-row gap-6 shadow-md rounded-lg bg-white p-4 sm:p-6">
+    <div className="min-h-screen bgDarkGray px-4 sm:px-6 lg:px-8 py-10">
+      <div className="flex flex-col lg:flex-row gap-6 shadow-md rounded-lg bg-background-card p-4 sm:p-6">
         {/* Cart Items */}
         <div className="w-full lg:w-2/3">
-          <h1 className="font-semibold text-2xl border-b pb-4 mb-4">
+          <h1 className="font-semibold text-2xl text-(--color-primary-cyan) border-b pb-4 mb-4">
             Shopping Cart
           </h1>
 
-          {/* Table headers for large screens */}
-          <div className="hidden lg:flex mt-3 text-xs uppercase text-gray-600">
+          {/* Table headers */}
+          <div className="hidden lg:flex mt-3 text-xs uppercase text-gray-400">
             <h3 className="font-semibold w-2/5">Product Details</h3>
             <h3 className="font-semibold text-center w-1/5">Quantity</h3>
             <h3 className="font-semibold text-center w-1/5">Price</h3>
@@ -61,22 +61,22 @@ const Cart = () => {
             return (
               <div
                 key={_id}
-                className="flex flex-col sm:flex-row sm:items-center gap-4 py-4 border-b"
+                className="flex flex-col sm:flex-row sm:items-center gap-4 py-4 border-b border-gray-700"
               >
                 {/* Product Info */}
                 <div className="flex items-center gap-4 sm:flex-1">
                   <img
                     className="h-20 w-20 object-cover rounded"
                     src={img}
-                    alt={CategoryName || "product"}
+                    alt={CategoryName}
                   />
                   <div className="flex flex-col gap-2">
-                    <span className="text-red-500 font-bold capitalize">
+                    <span className="text-(--color-accent-cyan) font-bold capitalize">
                       {CategoryName}
                     </span>
                     <button
                       onClick={() => dispatch(removeFromCart(_id))}
-                      className="text-xs text-gray-500 hover:text-red-500 self-start"
+                      className="text-xs text-gray-400 hover:text-red-500 self-start"
                     >
                       Remove
                     </button>
@@ -87,7 +87,7 @@ const Cart = () => {
                 <div className="flex items-center gap-3 sm:justify-center sm:w-1/5">
                   <button
                     onClick={() => dispatch(decrementItem(_id))}
-                    className="p-2 text-gray-600 hover:text-gray-800"
+                    className="p-2 text-gray-400 hover:text-gray-200"
                   >
                     <svg
                       className="w-4 h-4"
@@ -97,14 +97,12 @@ const Cart = () => {
                       <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
                     </svg>
                   </button>
-
-                  <div className="px-3 py-1 border rounded text-center min-w-[3rem]">
+                  <div className="px-3 py-1 border border-gray-700 rounded text-center min-w-[3rem]">
                     {quantity}
                   </div>
-
                   <button
                     onClick={() => dispatch(addToCart(item))}
-                    className="p-2 text-gray-600 hover:text-gray-800"
+                    className="p-2 text-gray-400 hover:text-gray-200"
                   >
                     <svg
                       className="w-4 h-4"
@@ -132,10 +130,10 @@ const Cart = () => {
           {/* Continue Shopping */}
           <Link
             to="/"
-            className="flex items-center font-semibold text-pink-600 text-sm mt-6 gap-2 hover:text-pink-700"
+            className="flex items-center font-semibold text-(--color-accent-cyan) text-sm mt-6 gap-2 hover:text-(--color-primary-cyan) transition"
           >
             <svg
-              className="fill-current text-pink-600 w-4"
+              className="fill-current text-(--color-accent-cyan) w-4"
               viewBox="0 0 448 512"
             >
               <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
@@ -145,20 +143,20 @@ const Cart = () => {
         </div>
 
         {/* Order Summary */}
-        <div className="w-full lg:w-1/3 px-2 sm:px-4 lg:px-6 py-6 bg-gray-50 rounded-lg border mt-6 lg:mt-0">
-          <h1 className="font-semibold text-2xl border-b pb-4">
+        <div className="w-full lg:w-1/3 px-2 sm:px-4 lg:px-6 py-6 bg-gray-800 rounded-lg border border-gray-700 mt-6 lg:mt-0">
+          <h1 className="font-semibold text-2xl text-(--color-primary-cyan) border-b pb-4">
             Order Summary
           </h1>
-          <div className="flex font-bold justify-between my-4 uppercase">
+          <div className="flex font-bold justify-between my-4 uppercase text-gray-300">
             <span>Items</span>
             <span>{amount}</span>
           </div>
 
           <div className="space-y-2 mb-4">
-            <label className="font-medium inline-block text-sm uppercase">
+            <label className="font-medium inline-block text-sm uppercase text-gray-300">
               Shipping
             </label>
-            <select className="block p-2 text-gray-600 w-full text-sm border rounded">
+            <select className="block p-2 text-gray-400 w-full text-sm border border-gray-700 rounded bg-gray-900">
               <option>Standard shipping - $10.00</option>
             </select>
           </div>
@@ -166,7 +164,7 @@ const Cart = () => {
           <div className="space-y-2 mb-4">
             <label
               htmlFor="promo"
-              className="font-semibold inline-block text-sm uppercase"
+              className="font-semibold inline-block text-sm uppercase text-gray-300"
             >
               Promo Code
             </label>
@@ -174,19 +172,19 @@ const Cart = () => {
               type="text"
               id="promo"
               placeholder="Enter your code"
-              className="p-2 text-sm w-full border rounded mt-2"
+              className="p-2 text-sm w-full border border-gray-700 rounded bg-gray-900 text-white mt-2"
             />
-            <button className="w-full bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase rounded">
+            <button className="w-full bg-(--color-accent-cyan) hover:bg-(--color-primary-cyan) px-5 py-2 text-sm text-white uppercase rounded transition">
               Apply
             </button>
           </div>
 
-          <div className="border-t pt-4">
-            <div className="flex font-bold justify-between text-md uppercase mb-4">
+          <div className="border-t border-gray-700 pt-4">
+            <div className="flex font-bold justify-between text-md uppercase mb-4 text-gray-300">
               <span>Total cost</span>
               <span>${total}</span>
             </div>
-            <button className="w-full bg-pink-500 font-semibold hover:bg-pink-600 py-3 text-sm text-white uppercase rounded">
+            <button className="w-full bg-(--color-accent-cyan) hover:bg-(--color-primary-cyan) font-semibold py-3 text-sm text-white uppercase rounded transition">
               Checkout
             </button>
           </div>

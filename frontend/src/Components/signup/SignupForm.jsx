@@ -10,23 +10,19 @@ import { setProfileInfo } from "../../redux/actions/actionsCreator";
 const SignupForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [value, setValue] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [value, setValue] = useState({ name: "", email: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
-  const updateForm = (value) => setValue((prev) => ({ ...prev, ...value }));
+  const handleChange = (v) => setValue((prev) => ({ ...prev, ...v }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newPerson = { ...value };
-
+    setLoading(true);
     try {
       const res = await fetch("http://localhost:3333/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPerson),
+        body: JSON.stringify(value),
       });
       const data = await res.json();
 
@@ -35,83 +31,85 @@ const SignupForm = () => {
         setValue({ name: "", email: "", password: "" });
       } else {
         setAccessTokenCookie("accessToken", data.payload, 30);
-        dispatch(setProfileInfo(newPerson));
-        profileInLocalStorage(newPerson);
+        dispatch(setProfileInfo(value));
+        profileInLocalStorage(value);
         navigate("/");
       }
     } catch (error) {
       console.error(error);
       toast("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bgDarkGray flex items-center justify-center px-4 py-16">
-      <div className="w-full max-w-md rounded-xl bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 p-8 shadow-lg text-white">
-        <h2 className="text-center text-3xl font-bold text-primaryTextColor mb-6">
+    <div className="min-h-screen bg-background-dark flex items-center justify-center px-4 py-12 sm:py-16">
+      <div className="w-full max-w-md sm:max-w-lg rounded-xl bg-background-card p-6 sm:p-8 shadow-lg text-white">
+        <h2 className="text-center text-2xl sm:text-3xl font-bold text-(--color-primary-cyan) mb-6">
           Create Your Account
         </h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
+          {/* Name */}
           <div className="space-y-2">
-            <label
-              htmlFor="name"
-              className="block text-sm font-semibold text-gray-300"
-            >
+            <label className="block text-sm font-semibold text-gray-300">
               Name
             </label>
             <input
-              id="name"
               type="text"
               value={value.name}
-              onChange={(e) => updateForm({ name: e.target.value })}
+              onChange={(e) => handleChange({ name: e.target.value })}
               placeholder="Enter your name"
-              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)]"
             />
           </div>
 
+          {/* Email */}
           <div className="space-y-2">
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold text-gray-300"
-            >
+            <label className="block text-sm font-semibold text-gray-300">
               Email Address
             </label>
             <input
-              id="email"
               type="email"
               value={value.email}
-              onChange={(e) => updateForm({ email: e.target.value })}
+              onChange={(e) => handleChange({ email: e.target.value })}
               placeholder="name@example.com"
-              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)]"
             />
           </div>
 
+          {/* Password */}
           <div className="space-y-2">
-            <label
-              htmlFor="password"
-              className="block text-sm font-semibold text-gray-300"
-            >
+            <label className="block text-sm font-semibold text-gray-300">
               Password
             </label>
             <input
-              id="password"
               type="password"
               value={value.password}
-              onChange={(e) => updateForm({ password: e.target.value })}
+              onChange={(e) => handleChange({ password: e.target.value })}
               placeholder="Enter your password"
-              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
               required
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)]"
             />
           </div>
 
-          <button type="submit" className="w-full rounded-lg primaryBtnUi">
-            Sign Up Now
+          {/* Signup Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-lg bg-(--color-accent-cyan) text-white py-2 font-semibold hover:opacity-90 transition"
+          >
+            {loading ? "Signing Up..." : "Sign Up Now"}
           </button>
 
-          <Link to="/login" className="inline-block w-full secondaryBtnUi">
+          {/* Login Link */}
+          <Link
+            to="/login"
+            className="inline-block w-full mt-2 text-center rounded-lg border border-(--color-primary-cyan) text-(--color-primary-cyan) py-2 font-semibold hover:bg-(--color-primary-cyan) hover:text-white transition"
+          >
             Already Have an Account? Login
           </Link>
         </form>

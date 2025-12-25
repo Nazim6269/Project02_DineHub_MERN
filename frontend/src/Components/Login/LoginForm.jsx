@@ -16,11 +16,33 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState({ email: "", password: "" });
 
-  // Handle Google login success
+  const handleChange = (v) => setValue((prev) => ({ ...prev, ...v }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:3333/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(value),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setAccessTokenCookie("accessToken", data.payload, 30);
+        navigate("/");
+      } else {
+        toast(data.message);
+      }
+      setValue({ email: "", password: "" });
+    } catch (error) {
+      console.error(error);
+      toast("Login failed");
+    }
+  };
+
   const handleGoogleSuccess = async (googleData) => {
     const userInfo = jwtDecode(googleData.credential);
     const { name, email, sub: googleId, picture } = userInfo;
-
     const createUser = { name, email, googleId, picture };
 
     try {
@@ -29,7 +51,6 @@ const LoginForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(createUser),
       });
-
       const userData = await res.json();
 
       dispatch(setProfileInfo(createUser));
@@ -42,43 +63,12 @@ const LoginForm = () => {
     }
   };
 
-  // Handle Google login error
   const handleGoogleError = (error) => console.error(error);
 
-  // Handle input changes
-  const handleChange = (value) => setValue((prev) => ({ ...prev, ...value }));
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await fetch("http://localhost:3333/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(value),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        setAccessTokenCookie("accessToken", data.payload, 30);
-        navigate("/");
-      } else {
-        toast(data.message);
-      }
-
-      setValue({ email: "", password: "" });
-    } catch (error) {
-      console.error(error);
-      toast("Login failed");
-    }
-  };
-
   return (
-    <div className="min-h-screen bgDarkGray flex items-center justify-center px-4 py-12 sm:py-16">
-      <div className="w-full max-w-md sm:max-w-lg rounded-xl bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 p-6 sm:p-8 shadow-lg text-white">
-        <h2 className="text-center text-2xl sm:text-3xl font-bold text-primaryTextColor mb-6">
+    <div className="min-h-screen bg-background-dark flex items-center justify-center px-4 py-12 sm:py-16">
+      <div className="w-full max-w-md sm:max-w-lg rounded-xl bg-background-card p-6 sm:p-8 shadow-lg text-white">
+        <h2 className="text-center text-2xl sm:text-3xl font-bold text-(--color-primary-cyan) mb-6">
           Login
         </h2>
 
@@ -94,7 +84,7 @@ const LoginForm = () => {
               onChange={(e) => handleChange({ email: e.target.value })}
               placeholder="name@example.com"
               required
-              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white text-sm sm:text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white text-sm sm:text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)]"
             />
           </div>
 
@@ -109,22 +99,28 @@ const LoginForm = () => {
               onChange={(e) => handleChange({ password: e.target.value })}
               placeholder="Enter your password"
               required
-              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white text-sm sm:text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white text-sm sm:text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)]"
             />
           </div>
 
           {/* Login button */}
-          <button type="submit" className="w-full rounded-lg primaryBtnUi">
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-(--color-accent-cyan) text-white py-2 font-semibold hover:opacity-90 transition"
+          >
             Login
           </button>
 
           {/* Forget Password */}
-          <div className="text-center font-semibold underline text-purple-400 text-sm sm:text-base">
+          <div className="text-center font-semibold underline text-(--color-primary-cyan) text-sm sm:text-base">
             <Link to="/forget-password">Forget Password?</Link>
           </div>
 
           {/* Signup */}
-          <Link to="/signup" className="inline-block w-full secondaryBtnUi">
+          <Link
+            to="/signup"
+            className="inline-block w-full mt-2 text-center rounded-lg border border-(--color-primary-cyan) text-(--color-primary-cyan) py-2 font-semibold hover:bg-(--color-primary-cyan) hover:text-white transition"
+          >
             Create New Account
           </Link>
         </form>

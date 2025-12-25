@@ -4,7 +4,7 @@ import AdminTopbar from "../Components/admin/AdminTopbar";
 
 export default function AdminLayout() {
   return (
-    <div className="flex min-h-screen bg-gray-900">
+    <div className="flex min-h-screen bg-background-dark text-text-primary">
       {/* Sidebar */}
       <AdminSidebar />
 
@@ -14,7 +14,7 @@ export default function AdminLayout() {
         <AdminTopbar />
 
         {/* Page content */}
-        <main className="p-6 flex-1 overflow-y-auto">
+        <main className="p-4 sm:p-6 lg:p-8 flex-1 overflow-y-auto bg-background-dark">
           <Outlet />
         </main>
       </div>

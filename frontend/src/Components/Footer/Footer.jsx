@@ -1,77 +1,122 @@
 const Footer = () => {
   return (
-    <footer className="bgDarkGray text-white body-font">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row justify-between gap-8 md:gap-0">
+    <footer
+      className="
+        relative
+        bg-background-dark
+        text-text-primary
+        overflow-hidden
+      "
+    >
+      {/* Background glow */}
+      <div
+        className="
+          pointer-events-none absolute inset-0
+          bg-(--background-image-gradient-mesh)
+          opacity-30
+        "
+      />
+
+      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col md:flex-row gap-10">
         {/* Brand / About */}
         <div className="md:w-1/3 flex flex-col gap-4">
-          <h2 className="text-2xl sm:text-3xl font-bold text-primaryTextColor">
-            DineHub
+          <h2 className="text-2xl sm:text-3xl font-bold">
+            Dine
+            <span className="text-(--color-primary-cyan)">Hub</span>
           </h2>
-          <p className="text-gray-300 leading-relaxed">
+          <p className="text-text-secondary leading-relaxed">
             Savor every flavor with our curated culinary delights. Join us to
             explore a world of exquisite tastes and unforgettable experiences.
           </p>
         </div>
 
         {/* Links */}
-        <div className="md:w-1/3 flex flex-col sm:flex-row justify-between gap-6 md:gap-12">
-          <div className="flex flex-col gap-2">
-            <h3 className="text-primaryTextColor font-semibold text-lg">
-              Company
-            </h3>
-            <a href="/" className="hover:text-primaryTextHoverColor transition">
-              About
-            </a>
-            <a
-              href="/contact"
-              className="hover:text-primaryTextHoverColor transition"
-            >
-              Contact
-            </a>
-            <a
-              href="/faq"
-              className="hover:text-primaryTextHoverColor transition"
-            >
-              FAQ
-            </a>
+        <div className="md:w-1/3 flex flex-col sm:flex-row gap-10">
+          <div className="flex flex-col gap-3">
+            <h3 className="font-semibold text-lg text-text-primary">Company</h3>
+            {["About", "Contact", "FAQ"].map((item) => (
+              <a
+                key={item}
+                href={`/${item.toLowerCase()}`}
+                className="
+                  text-sm
+                  text-text-secondary
+                  hover:text-(--color-accent-cyan)
+                  transition
+                "
+              >
+                {item}
+              </a>
+            ))}
           </div>
-          <div className="flex flex-col gap-2">
-            <h3 className="text-primaryTextColor font-semibold text-lg">
+
+          <div className="flex flex-col gap-3">
+            <h3 className="font-semibold text-lg text-text-primary">
               Follow Us
             </h3>
-            <a href="#" className="hover:text-primaryTextHoverColor transition">
-              Facebook
-            </a>
-            <a href="#" className="hover:text-primaryTextHoverColor transition">
-              Instagram
-            </a>
-            <a href="#" className="hover:text-primaryTextHoverColor transition">
-              Twitter
-            </a>
+            {["Facebook", "Instagram", "Twitter"].map((item) => (
+              <a
+                key={item}
+                href="#"
+                className="
+                  text-sm
+                  text-text-secondary
+                  hover:text-(--color-accent-cyan)
+                  transition
+                "
+              >
+                {item}
+              </a>
+            ))}
           </div>
         </div>
 
         {/* Newsletter / CTA */}
         <div className="md:w-1/3 flex flex-col gap-4">
-          <h3 className="text-primaryTextColor font-semibold text-lg">
-            Subscribe
-          </h3>
-          <p className="text-gray-300 text-sm">
-            Get updates about new menus and offers.
+          <h3 className="font-semibold text-lg text-text-primary">Subscribe</h3>
+          <p className="text-sm text-text-secondary">
+            Get updates about new menus and special offers.
           </p>
-          <div className="flex gap-2">
+
+          <div className="flex">
             <input
               type="email"
               placeholder="Your email"
-              className="flex-1 rounded-l-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-primaryTextHoverColor"
+              className="
+                flex-1 rounded-l-full
+                bg-background-card
+                px-4 py-2 text-sm
+                text-text-primary
+                placeholder:text-[var(--color-text-muted)]
+                border border-white/10
+                focus:outline-none
+                focus:border-[var(--color-accent-cyan)]
+              "
             />
-            <button className="primaryBtnUi">Subscribe</button>
+            <button
+              className="
+                rounded-r-full px-5 py-2
+                text-sm font-semibold text-black
+                bg-(--color-accent-cyan)
+                hover:bg-[var(--color-accent-cyan-light)]
+                shadow-[0_0_25px_rgba(0,217,192,0.35)]
+                transition
+              "
+            >
+              Subscribe
+            </button>
           </div>
         </div>
       </div>
 
       {/* Footer bottom */}
-      <div className="border-t border-gray-700 mt-8 pt-4 text-center text-gray-400 text-sm">
+      <div
+        className="
+          relative border-t border-white/5
+          py-4 text-center text-sm
+          text-[var(--color-text-muted)]
+        "
+      >
         © {new Date().getFullYear()} DineHub — All rights reserved
       </div>
     </footer>

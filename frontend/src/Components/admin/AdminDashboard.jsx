@@ -3,7 +3,7 @@ import AdminTable from "./AdminTable";
 
 const AdminDashboard = () => {
   return (
-    <div className="text-primaryTextColor">
+    <div className="text-text-primary p-4 sm:p-6 lg:p-8">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <AdminStatCart title="Total Sales" value="$12,430" />
@@ -13,10 +13,12 @@ const AdminDashboard = () => {
       </div>
 
       {/* Recent Orders Table */}
-      <h2 className="text-xl font-semibold mb-4 text-primaryTextColor">
+      <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-(--color-accent-cyan)">
         Recent Orders
       </h2>
-      <AdminTable />
+      <div className="bg-background-card rounded-xl shadow-lg overflow-auto">
+        <AdminTable />
+      </div>
     </div>
   );
 };

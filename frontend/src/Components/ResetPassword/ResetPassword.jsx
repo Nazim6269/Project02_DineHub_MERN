@@ -15,59 +15,64 @@ const ResetPassword = () => {
     try {
       const res = await fetch("http://localhost:3333/reset-password", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ newPass, confirmPass, id }),
       });
-      setNewPass("");
-      setConfirmPass("");
       const data = await res.json();
       toast(data.message);
+      setNewPass("");
+      setConfirmPass("");
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast("Something went wrong");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-16">
-      <div className="w-full max-w-md sm:max-w-xl rounded-xl bg-white p-6 sm:p-8 shadow-md">
-        <h2 className="text-center text-2xl sm:text-3xl font-bold text-pink-600 mb-6">
-          Enter Your Password
+    <div className="min-h-screen bgDarkGray flex items-center justify-center px-4 py-16">
+      <div className="w-full max-w-md sm:max-w-lg rounded-xl bg-background-card p-6 sm:p-8 shadow-lg text-white">
+        <h2 className="text-center text-2xl sm:text-3xl font-bold text-(--color-primary-cyan) mb-6">
+          Reset Your Password
         </h2>
+
         <form className="space-y-4" onSubmit={handleSend}>
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">
+            <label className="block text-sm font-semibold text-gray-300">
               New Password
             </label>
             <input
               type="password"
               value={newPass}
               onChange={(e) => setNewPass(e.target.value)}
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-gray-900 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
+              placeholder="Enter new password"
               required
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)]"
             />
           </div>
+
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">
+            <label className="block text-sm font-semibold text-gray-300">
               Confirm Password
             </label>
             <input
               type="password"
               value={confirmPass}
               onChange={(e) => setConfirmPass(e.target.value)}
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-gray-900 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
+              placeholder="Confirm new password"
               required
+              className="w-full rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)]"
             />
           </div>
+
           <button
             type="submit"
-            className="w-full rounded-lg bg-pink-600 px-4 py-2 text-white font-semibold shadow-sm transition hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"
+            className="w-full rounded-lg bg-(--color-accent-cyan) py-2 text-white font-semibold shadow-sm hover:opacity-90 transition"
           >
-            Send
+            Reset Password
           </button>
         </form>
       </div>
+
       <ToastContainer position="top-center" autoClose={4000} />
     </div>
   );
