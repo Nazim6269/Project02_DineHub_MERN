@@ -87,7 +87,7 @@ const Footer = () => {
                 bg-background-card
                 px-4 py-2 text-sm
                 text-text-primary
-                placeholder:text-[var(--color-text-muted)]
+                placeholder:text-text-muted
                 border border-white/10
                 focus:outline-none
                 focus:border-[var(--color-accent-cyan)]
@@ -114,7 +114,7 @@ const Footer = () => {
         className="
           relative border-t border-white/5
           py-4 text-center text-sm
-          text-[var(--color-text-muted)]
+          text-text-muted
         "
       >
         © {new Date().getFullYear()} DineHub — All rights reserved

@@ -28,7 +28,7 @@ const AdminSettings = () => {
       >
         {/* Site Name */}
         <div className="mb-4 flex flex-col gap-2">
-          <label className="text-[var(--color-text-muted)]">Site Name</label>
+          <label className="text-text-muted">Site Name</label>
           <input
             type="text"
             name="siteName"
@@ -40,7 +40,7 @@ const AdminSettings = () => {
 
         {/* Admin Email */}
         <div className="mb-4 flex flex-col gap-2">
-          <label className="text-[var(--color-text-muted)]">Admin Email</label>
+          <label className="text-text-muted">Admin Email</label>
           <input
             type="email"
             name="adminEmail"
@@ -52,7 +52,7 @@ const AdminSettings = () => {
 
         {/* Password */}
         <div className="mb-6 flex flex-col gap-2">
-          <label className="text-[var(--color-text-muted)]">Password</label>
+          <label className="text-text-muted">Password</label>
           <input
             type="password"
             name="password"

@@ -15,7 +15,7 @@ const Question = () => {
 
             <div className="flex flex-col sm:flex-row gap-2">
               <textarea
-                className="w-full sm:flex-1 rounded-lg border border-white/20 bg-background-dark px-3 py-2 text-text-primary placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)] transition"
+                className="w-full sm:flex-1 rounded-lg border border-white/20 bg-background-dark px-3 py-2 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)] transition"
                 placeholder="Type your question here..."
                 rows={2}
               ></textarea>

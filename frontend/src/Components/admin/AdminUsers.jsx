@@ -1,8 +1,12 @@
+import useFetchAdminData from "../../hooks/useFetchAdminData";
+import Error from "../Error";
+import Loading from "../Loading";
+
 const AdminUsers = () => {
-  const users = [
-    { id: 1, name: "Admin User", email: "admin@mail.com", role: "admin" },
-    { id: 2, name: "Customer One", email: "user@mail.com", role: "user" },
-  ];
+  const { data, isPending, isError, error } = useFetchAdminData();
+
+  if (isPending) return <Loading />;
+  if (isError) return <Error error={error} />;
 
   return (
     <div className="flex flex-col gap-6">
@@ -13,9 +17,9 @@ const AdminUsers = () => {
 
       {/* Table */}
       <div className="bg-background-card rounded-xl shadow-lg overflow-x-auto border border-white/20">
-        <table className="w-full min-w-[600px] text-left text-text-secondary">
+        <table className="w-full min-w-150 text-left text-text-secondary">
           {/* Table Head */}
-          <thead className="bg-background-dark text-[var(--color-text-muted)] text-sm uppercase">
+          <thead className="bg-background-dark text-text-muted text-sm uppercase">
             <tr>
               <th className="p-4">Name</th>
               <th className="p-4">Email</th>
@@ -26,9 +30,9 @@ const AdminUsers = () => {
 
           {/* Table Body */}
           <tbody>
-            {users.map((user) => (
+            {data?.payload?.users.map((user) => (
               <tr
-                key={user.id}
+                key={user._id}
                 className="border-t border-white/20 hover:bg-background-dark transition"
               >
                 <td className="p-4 font-medium text-text-primary">

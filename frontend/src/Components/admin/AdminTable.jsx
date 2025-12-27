@@ -67,7 +67,8 @@ const AdminTable = ({ orders }) => {
               {/* items column */}
               <td className="p-4">
                 <span className="text-text-secondary">
-                  {order.items.length} {order.itemCount <= 1 ? "item" : "items"}
+                  {order.items.length}{" "}
+                  {order.items.length === 1 ? "item" : "items"}
                 </span>
               </td>
 

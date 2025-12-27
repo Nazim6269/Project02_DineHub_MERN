@@ -1,4 +1,9 @@
+import useFetchAdminData from "../../hooks/useFetchAdminData";
+import Error from "../Error";
+import Loading from "../Loading";
+
 const AdminProducts = () => {
+  const { isPending, isError, data, error } = useFetchAdminData();
   const products = [
     { id: 1, name: "iPhone 15", price: 999, stock: 12, status: "Active" },
     {
@@ -9,6 +14,9 @@ const AdminProducts = () => {
       status: "Out of stock",
     },
   ];
+
+  if (isPending) return <Loading />;
+  if (isError) return <Error error={error} />;
 
   return (
     <div className="flex flex-col gap-6">
@@ -24,9 +32,9 @@ const AdminProducts = () => {
 
       {/* Table */}
       <div className="bg-background-card rounded-xl shadow-lg overflow-x-auto border border-white/20">
-        <table className="w-full min-w-[600px] text-left text-text-secondary">
+        <table className="w-full min-w-150 text-left text-text-secondary">
           {/* Table Head */}
-          <thead className="bg-background-dark text-[var(--color-text-muted)] text-sm uppercase">
+          <thead className="bg-background-dark text-text-muted text-sm uppercase">
             <tr>
               <th className="p-4">Product</th>
               <th className="p-4">Price</th>
@@ -38,20 +46,20 @@ const AdminProducts = () => {
 
           {/* Table Body */}
           <tbody>
-            {products.map((p) => (
+            {data?.payload?.products.map((p) => (
               <tr
-                key={p.id}
+                key={p._id}
                 className="border-t border-white/20 hover:bg-background-dark transition"
               >
                 <td className="p-4 font-medium text-text-primary">{p.name}</td>
                 <td className="p-4 font-semibold text-text-primary">
-                  ${p.price}
+                  {p.options[0].half && p.options[0].full}
                 </td>
                 <td className="p-4">{p.stock}</td>
                 <td className="p-4">
                   <span
                     className={`px-3 py-1 text-xs font-medium rounded-full ${
-                      p.status === "Active"
+                      p.status === "available"
                         ? "bg-green-500/10 text-green-400"
                         : "bg-red-500/10 text-red-400"
                     }`}

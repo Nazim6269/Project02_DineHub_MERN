@@ -113,7 +113,7 @@ const Cards = () => {
                   <span
                     className="
                       text-xs font-semibold tracking-widest
-                      text-[var(--color-text-muted)]
+                      text-text-muted
                     "
                   >
                     {name}

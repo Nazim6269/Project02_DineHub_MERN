@@ -1,8 +1,9 @@
+import useFetchAdminData from "../../hooks/useFetchAdminData";
+import Error from "../Error";
+import Loading from "../Loading";
+
 const AdminOrders = () => {
-  const orders = [
-    { id: "#1001", customer: "John Doe", total: 250, status: "Pending" },
-    { id: "#1002", customer: "Jane Smith", total: 520, status: "Delivered" },
-  ];
+  const { data, isError, isPending, error } = useFetchAdminData();
 
   const statusColor = {
     Pending: "bg-yellow-500/10 text-yellow-400",
@@ -10,6 +11,9 @@ const AdminOrders = () => {
     Delivered: "bg-green-500/10 text-green-400",
     Cancelled: "bg-red-500/10 text-red-400",
   };
+
+  if (isPending) return <Loading />;
+  if (isError) return <Error error={error} />;
 
   return (
     <div className="flex flex-col gap-6">
@@ -20,9 +24,9 @@ const AdminOrders = () => {
 
       {/* Table Wrapper */}
       <div className="bg-background-card rounded-xl shadow-lg overflow-x-auto border border-white/20">
-        <table className="w-full min-w-[600px] text-left text-text-secondary">
+        <table className="w-full min-w-150 text-left text-text-secondary">
           {/* Table Head */}
-          <thead className="bg-background-dark text-[var(--color-text-muted)] text-sm uppercase">
+          <thead className="bg-background-dark text-text-muted text-sm uppercase">
             <tr>
               <th className="p-4">Order ID</th>
               <th className="p-4">Customer</th>
@@ -34,17 +38,17 @@ const AdminOrders = () => {
 
           {/* Table Body */}
           <tbody>
-            {orders.map((order) => (
+            {data?.payload?.orders.map((order) => (
               <tr
-                key={order.id}
+                key={order.orderId}
                 className="border-t border-white/20 hover:bg-background-dark transition"
               >
                 <td className="p-4 font-medium text-text-primary">
-                  {order.id}
+                  {order.orderId}
                 </td>
                 <td className="p-4">{order.customer}</td>
                 <td className="p-4 font-semibold text-text-primary">
-                  ${order.total}
+                  {order.total}
                 </td>
                 <td className="p-4">
                   <span

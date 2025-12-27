@@ -156,7 +156,7 @@ const SingleCategory = () => {
                   </div>
 
                   <div className="p-4 flex flex-col gap-1">
-                    <span className="text-xs tracking-widest text-[var(--color-text-muted)]">
+                    <span className="text-xs tracking-widest text-text-muted">
                       {item.CategoryName}
                     </span>
 

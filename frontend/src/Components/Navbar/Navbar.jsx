@@ -1,4 +1,4 @@
-import { ShoppingCart } from "lucide-react";
+import { LayoutDashboardIcon, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -36,9 +36,24 @@ const Navbar = () => {
           </Link>
 
           {/* Right Section */}
+
           {profile ? (
             // 🔐 Logged In
             <div className="flex items-center gap-4">
+              {/* admin dashboard */}
+              <button
+                className="
+                  relative
+                  text-text-secondary
+                  hover:text-(--color-accent-cyan)
+                  transition
+                "
+              >
+                <Link to={"/admin/dashboard"}>
+                  <LayoutDashboardIcon className="w-6 h-6" />
+                </Link>
+              </button>
+
               {/* Cart */}
               <button
                 className="
@@ -48,7 +63,7 @@ const Navbar = () => {
                   transition
                 "
               >
-                <ShoppingCart className="w-5 h-5" />
+                <ShoppingCart className="w-6 h-6" />
               </button>
 
               {/* Profile */}

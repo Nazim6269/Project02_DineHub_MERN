@@ -15,7 +15,7 @@ const Review = () => {
             <div className="flex flex-col sm:flex-row gap-2">
               <textarea
                 rows={3}
-                className="w-full sm:flex-1 rounded-lg border border-white/20 bg-background-dark px-3 py-2 text-text-primary placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)] resize-none transition"
+                className="w-full sm:flex-1 rounded-lg border border-white/20 bg-background-dark px-3 py-2 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-(--color-accent-cyan) focus:border-[var(--color-accent-cyan)] resize-none transition"
                 placeholder="Write your review..."
               ></textarea>
 

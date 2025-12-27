@@ -1,10 +1,24 @@
 import { useState } from "react";
+import useFetchAdminData from "../../hooks/useFetchAdminData";
+import Error from "../Error";
+import Loading from "../Loading";
 
 const AdminCategories = () => {
+  const { isError, isPending, data, error } = useFetchAdminData();
   const [categories, setCategories] = useState([
     { id: 1, name: "Electronics", slug: "electronics" },
     { id: 2, name: "Fashion", slug: "fashion" },
   ]);
+
+  if (isPending) return <Loading />;
+  if (isError) return <Error error={error} />;
+
+  const categoryArray = data?.payload?.products.reduce((acc, curr) => {
+    if (!acc.includes(curr.CategoryName)) {
+      acc.push(curr.CategoryName);
+    }
+    return acc;
+  }, []);
 
   return (
     <div className="flex flex-col gap-6">
@@ -20,8 +34,8 @@ const AdminCategories = () => {
 
       {/* Table */}
       <div className="bg-background-card rounded-xl shadow-lg overflow-x-auto border border-white/20">
-        <table className="w-full min-w-[500px] text-left text-text-secondary">
-          <thead className="bg-background-dark text-[var(--color-text-muted)] text-sm uppercase">
+        <table className="w-full min-w-125 text-left text-text-secondary">
+          <thead className="bg-background-dark text-text-muted text-sm uppercase">
             <tr>
               <th className="p-4">Name</th>
               <th className="p-4">Slug</th>
@@ -29,15 +43,13 @@ const AdminCategories = () => {
             </tr>
           </thead>
           <tbody>
-            {categories.map((cat) => (
+            {categoryArray.map((cat, index) => (
               <tr
-                key={cat.id}
+                key={index}
                 className="border-t border-white/20 hover:bg-background-dark transition"
               >
-                <td className="p-4 font-medium text-text-primary">
-                  {cat.name}
-                </td>
-                <td className="p-4">{cat.slug}</td>
+                <td className="p-4 font-medium text-text-primary">{cat}</td>
+                <td className="p-4">{cat}</td>
                 <td className="p-4 text-right flex flex-wrap gap-2 justify-end">
                   <button className="text-(--color-accent-cyan) hover:underline">
                     Edit

@@ -19,14 +19,15 @@ const menuItems = [
 
 const AdminSidebar = () => {
   return (
-    <aside className="w-64 bg-background-card text-text-primary hidden md:flex flex-col">
+    <aside className=" w-64 bg-background-card text-text-primary hidden md:flex flex-col">
       {/* Logo */}
+
       <div className="p-6 text-2xl font-bold border-b border-white/20 text-(--color-accent-cyan)">
         Admin Panel
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-4 space-y-2 ">
         {menuItems.map(({ name, path, icon: Icon }) => (
           <NavLink
             key={name}
